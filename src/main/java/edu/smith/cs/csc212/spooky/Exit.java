@@ -1,5 +1,6 @@
 package edu.smith.cs.csc212.spooky;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -67,6 +68,12 @@ public class Exit {
 	}
 	
 	/**
+	 * 
+	 */
+	
+	private boolean hidden=false;
+	
+	/**
 	 * The other half of hashCode that lets us put it in a HashMap or HashSet.
 	 */
 	public boolean equals(Object other) {
@@ -76,4 +83,56 @@ public class Exit {
 		}
 		return false;
 	}
-}
+	
+	/**
+	 * Initially create a boolean for
+	 * Exit and its children that tells
+	 * us if a exit is secret
+	 * @return whether exit is secret
+	 */
+	public boolean isSecret() {
+			if ((this.description!="Try a new exit.")) {
+			return false;
+			} else {
+			return true;
+			}}
+	
+	/** 
+	 * Initially search is false
+	 */
+	public static boolean search= false;
+	
+	/**
+	 *  Search becomes true if user
+	 *  types search that suggest the
+	 *  game search for an exit
+	 */
+	
+	private void search(){
+		if ((isSecret()==true) && (search==true)){
+			hidden= false;
+			} else {}
+	}
+		
+	public boolean isLocked() {
+		if ((this.description!= "YOU HAVE FOUND THE SPECIAL DOOR.")) {
+		return false;
+			} else {
+		return true;
+	}}
+	public static boolean key= false;
+	private static boolean open= true;
+
+	private void key() {
+		if ( ((isLocked()==true) && (key==true)) | (isLocked()==false) ) {
+			open=true;
+		} else {
+			open=false;
+			}
+		
+		}
+		
+	
+
+}	
+

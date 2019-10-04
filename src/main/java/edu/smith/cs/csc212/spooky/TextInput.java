@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TextInput {
+	private static final String BufferedReader = null;
 	/**
 	 * The source of data for text input.
 	 */
@@ -99,6 +100,16 @@ public class TextInput {
 			}
 			System.err.println("Couldn't understand: " + response + " try one of [yes, no]");
 		}
+	}
+		
+	public boolean enquiry() {
+		List<String> SearchPrompt= this.getUserWords(BufferedReader);
+		if (SearchPrompt.contains("search")){
+			System.out.println("Test");
+			return true; 
+			} else { 
+				return false;
+			}
 	}
 
 	/**

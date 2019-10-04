@@ -1,6 +1,7 @@
 package edu.smith.cs.csc212.spooky;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * This is our main class for SpookyMansion.
@@ -11,6 +12,11 @@ import java.util.List;
  *
  */
 public class InteractiveFiction {
+			public static int hour=0;
+			public static int hourPast;
+			public static int actualT;
+			public static Random random= new Random();
+
 
 	/**
 	 * This method actually plays the game.
@@ -31,10 +37,41 @@ public class InteractiveFiction {
 			
 			System.out.println();
 			System.out.println("... --- ...");
+			// The place where we are and the exact location we are in is printed.
+			System.out.println("Place: "+place);
+			System.out.println("Here: "+here);
+			
+			
+			
+			
+			// Tell us the description about the location we're in
 			System.out.println(here.getDescription());
+			System.out.println();
+			
+			// Now let's check if the location is a place we already have seen before and comment on this
+			if (here.alreadyVisted()){
+				System.out.println("Haven't you been here?");
+			}
+			// Now that we have gone to the place this location is now visited
+			here.visit();
+			
+			// Generate a random integer
+			hourPast= random.nextInt(23);
+			// Assign the new values to gametime
+			GameTime Gt= new GameTime(hour, hourPast);
+			// Actually return the hour
+			actualT+= Gt.getHour();
+			int dayT=actualT%24;
+			// Tell us the time if 12 or more hours have passed
+			if (hourPast>=12) {				
+				System.out.println(hourPast+" hrs. more have passed."); 
+			}
+			System.out.println("It is "+ dayT +":00 in the day.");
+			
 
 			// Game over after print!
 			if (here.isTerminalState()) {
+				System.out.println("You have been in the game for "+ actualT+" hours.");
 				break;
 			}
 
@@ -43,7 +80,11 @@ public class InteractiveFiction {
 
 			for (int i=0; i<exits.size(); i++) {
 				Exit e = exits.get(i);
+				if ((e.key==false)&& (e.isLocked()==true)) {
+					System.out.println(" "+ i+". You cannot go here because the door is locked.");
+				} else {
 				System.out.println(" "+i+". " + e.getDescription());
+			}
 			}
 
 			// Figure out what the user wants to do, for now, only "quit" is special.
@@ -54,16 +95,31 @@ public class InteractiveFiction {
 			}
 
 			// Get the word they typed as lowercase, and no spaces.
-			// Do not uppercase action -- I have lowercased it.
+			// Do not upper-case action -- I have lowercased it.
 			String action = words.get(0).toLowerCase().trim();
 
-			if (action.equals("quit")) {
-				if (input.confirm("Are you sure you want to quit?")) {
-					return place;
+				if (action.equals("search")) {
+					Exit.search= true;
+					continue;
+				} else {
+				} if (action.equals("key")) {
+					Exit.key=true;
+					continue;
+				} else {
+				} if (action.equals("help")) {
+					System.out.println("Try choosing a integer option (0-n)."
+							+ "Or try typing 'quit', 'q', or 'escape' to quit game.");
+					continue;
+				}	
+				if (action.equals("quit") | action.equals("q")| action.equals("escape")) {
+					if (input.confirm("Are you sure you want to quit?")) {
+						return place;
 				} else {
 					continue;
 				}
+				
 			}
+		
 
 			// From here on out, what they typed better be a number!
 			Integer exitNum = null;
@@ -81,6 +137,10 @@ public class InteractiveFiction {
 
 			// Move to the room they indicated.
 			Exit destination = exits.get(exitNum);
+			Exit destPrior= exits.get(0);
+			if ((destination.key==false)&& (destination.isLocked()==true)) {
+				//place= destination.(game.getStart());
+			}
 			place = destination.getTarget();
 		}
 
@@ -90,13 +150,14 @@ public class InteractiveFiction {
 	/**
 	 * This is where we play the game.
 	 * @param args
-	 */
+	 */    
 	public static void main(String[] args) {
 		// This is a text input source (provides getUserWords() and confirm()).
 		TextInput input = TextInput.fromArgs(args);
 
 		// This is the game we're playing.
-		GameWorld game = new SpookyMansion();
+		//GameWorld game = new SpookyMansion();
+		GameWorld game= new WorldsOfFun();
 
 		// Actually play the game.
 		runGame(input, game);

@@ -28,6 +28,14 @@ public class Place {
 	private boolean terminal;
 	
 	/**
+	 * Initially no place is visited
+	 * @ return will tell us if visited has been marked as true or false/if the place has been visited
+	 */
+	private boolean visited= false;
+	
+	public String descItem;
+	
+	/**
 	 * Internal only constructor for Place. Use {@link #create(String, String)} or {@link #terminal(String, String)} instead.
 	 * @param id - the internal id of this place.
 	 * @param description - the user-facing description of the place.
@@ -38,6 +46,8 @@ public class Place {
 		this.description = description;
 		this.exits = new ArrayList<>();
 		this.terminal = terminal;
+		stuff(exits);
+		List<Exit> vistedlist = new ArrayList<>(); 
 	}
 	
 	/**
@@ -47,6 +57,13 @@ public class Place {
 	public void addExit(Exit exit) {
 		this.exits.add(exit);
 	}
+	
+	/**
+	 * Add a secret exit
+	 */
+	//	public void addSecretExit(SecretExit exit) {
+	//		this.exits.add(exit);
+	//}
 	
 	/**
 	 * For gameplay, whether this place ends the game.
@@ -69,17 +86,28 @@ public class Place {
 	 * @return what we show to a player about this place.
 	 */
 	public String getDescription() {
+		description= description + descItem;
 		return this.description;
 	}
 
 	/**
 	 * Get a view of the exits from this Place, for navigation.
+	 * 
 	 * @return all the exits from this place.
 	 */
 	public List<Exit> getVisibleExits() {
 		List<Exit> visible = new ArrayList<>();
 		for (Exit e : this.exits) {
+			// Check if secret
+			if (e.isSecret()==true) {
+				//if secret add if search is true
+				if (e.search==true) {
+					visible.add(e);
+				}
+				
+			} else {
 			visible.add(e);
+			}
 		}
 		return visible;
 	}
@@ -128,4 +156,64 @@ public class Place {
 		return false;
 	}
 	
+	
+	/**
+	 *  We have or have not visited this place depending on the boolean visited
+	 * @return check if the place has been marked as visited
+	 */
+	public boolean alreadyVisted() {
+				return this.visited;
+		}
+	/**
+	 *  Mark the place as visited
+	 *  @ return changes visited to a true statement
+	 */
+	public void visit(){
+		this.visited=true;
+	}
+	
+	
+	/**
+	 *  Create a list of items that we can place in rooms
+	 *  #
+	 */
+	public void items() {
+		List <String>items= new ArrayList<>();
+			items.add("Special Key.");
+			items.add("Prize bear.");
+			items.add("Prize headphones.");
+			items.add("Water bottle.");
+			items.add("Admission ticket");
+			items.add("Picture.");
+			items.add("Concert Tshirt.");
+			items.add("Timberwolf Picture.");
+					
+
+			}
+	
+	/**
+	 * Stuff takes the l
+	 */
+
+	public void stuff(List items) {
+		for (String n: items) {
+			
+			
+		}
+	}
+	
+	
+	
+	
+	/*
+	 * public boolean isLocked() { if ((this.description!=
+	 * "YOU HAVE FOUND THE SPECIAL DOOR.")) { return false; } else { return true; }}
+	 * 
+	 * private static boolean locked=false; public static boolean key=false;
+	 */
+	
+	//public static Items() {
+		//return System.out.println("True");
+		
+	//}
 }

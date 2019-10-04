@@ -42,6 +42,9 @@ public class SpookyMansion implements GameWorld {
 						+ "You get the sense a secret is nearby, but you only see the stairs you came from."));
 		basement.addExit(new Exit("entranceHall", "There are stairs leading up."));
 		basement.addExit(new Exit("fallingPit", "There appears to be a pit in the center of the room you could climb into..."));
+		basement.addExit(new Exit("secretRoom", "You see another pathway"));		
+		basement.addExit(new Exit("labyrinth1", "There is a passageway in the corner of the room dark ahead."));
+
 		
 		Place fallingPit = insert(
 				Place.create("fallingPit", "I don't know what you were thinking..."));
@@ -51,6 +54,7 @@ public class SpookyMansion implements GameWorld {
 				"Something rustles in the rafters as you enter the attic. Creepy.\n" + "It's big up here."));
 		attic.addExit(new Exit("entranceHall", "There are stairs leading down."));
 		attic.addExit(new Exit("attic2", "There is more through an archway."));
+		attic.addExit(new Exit("labyrinth0", "There is something in the dark ahead."));
 
 		Place attic2 = insert(Place.create("attic2", "There's definitely a bat in here somewhere.\n"
 				+ "This part of the attic is brighter, so maybe you're safe here."));
@@ -79,10 +83,14 @@ public class SpookyMansion implements GameWorld {
 		secretRoom.addExit(new Exit("labyrinth0", "There is door with a skull on it... "+EMOJI_SKULL));
 		secretRoom.addExit(new Exit("hallway0", "There is a long hallway."));
 
-		int hallwayDepth = 3;
+		/**
+		 *  The hallway depth is increased from three to five steps you can take to exit the hall
+		 */
+		int hallwayDepth = 5;
 		int lastHallwayPart = hallwayDepth - 1;
 		for (int i = 0; i < hallwayDepth; i++) {
 			Place hallwayPart = insert(Place.create("hallway" + i, "This is a very long hallway."));
+			System.out.println("A scratch on the wall tell you. You have come"+i+ "steps in the hallway.");
 			if (i == 0) {
 				hallwayPart.addExit(new Exit("secretRoom", "Go back."));
 			} else {
@@ -99,7 +107,9 @@ public class SpookyMansion implements GameWorld {
 				+ "It is scary here, but there is an exit to outside.\n" + "Maybe you'll be safe out there."));
 
 		String labyrinthDescription = "You see four hallways stretching out into the mist.\n"
-				+ "On the ground, there is tile shaped like a compass.";
+				+ "On the ground, there is tile shaped like a compass."+
+				"Here is an added hint: If you take a wrong turn once there are still"+
+				"a variety of ways to get out.";
 		Place labyrinth0 = insert(Place.create("labyrinth0", labyrinthDescription));
 		Place labyrinth1 = insert(Place.create("labyrinth1", labyrinthDescription));
 		Place labyrinth2 = insert(Place.create("labyrinth2", labyrinthDescription));
@@ -107,6 +117,7 @@ public class SpookyMansion implements GameWorld {
 		
 		// solution: North.
 		labyrinth0.addExit(new Exit("labyrinth1", "Go North."));
+				
 		labyrinth0.addExit(new Exit("labyrinth0", "Go East."));
 		labyrinth0.addExit(new Exit("labyrinth0", "Go South."));
 		labyrinth0.addExit(new Exit("labyrinth0", "Go West."));
@@ -117,10 +128,13 @@ public class SpookyMansion implements GameWorld {
 		labyrinth1.addExit(new Exit("labyrinth0", "Go South."));
 		labyrinth1.addExit(new Exit("labyrinth0", "Go West."));
 		
+		// Modification:
+		// You can also get back to the Entrance hall using this route
 		// solution: East.
 		labyrinth2.addExit(new Exit("labyrinth0", "Go North."));
 		labyrinth2.addExit(new Exit("labyrinth3", "Go East."));
-		labyrinth2.addExit(new Exit("labyrinth0", "Go South."));
+		// Added way to get out
+		labyrinth2.addExit(new Exit("entraceHall", "Go South."));
 		labyrinth2.addExit(new Exit("labyrinth0", "Go West."));
 		
 		// solution: South.
