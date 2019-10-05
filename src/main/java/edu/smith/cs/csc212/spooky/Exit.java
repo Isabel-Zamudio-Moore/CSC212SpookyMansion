@@ -68,7 +68,7 @@ public class Exit {
 	}
 	
 	/**
-	 * 
+	 * Determine if the exit has been hidden
 	 */
 	
 	private boolean hidden=false;
@@ -107,22 +107,36 @@ public class Exit {
 	 *  types search that suggest the
 	 *  game search for an exit
 	 */
-	
 	private void search(){
 		if ((isSecret()==true) && (search==true)){
 			hidden= false;
 			} else {}
 	}
 		
+	/**
+	 * Differentiate locked doors from open doors
+	 * @return if the door is locked or not
+	 */
 	public boolean isLocked() {
 		if ((this.description!= "YOU HAVE FOUND THE SPECIAL DOOR.")) {
 		return false;
 			} else {
 		return true;
 	}}
+	
+	/**
+	 * Create a boolean for if key is had 
+	 */
 	public static boolean key= false;
+	
+	/**
+	 * Create a boolean for if door is open
+	 */
 	private static boolean open= true;
-
+	
+	/**
+	 *  Open the door if the key is found
+	 */
 	private void key() {
 		if ( ((isLocked()==true) && (key==true)) | (isLocked()==false) ) {
 			open=true;

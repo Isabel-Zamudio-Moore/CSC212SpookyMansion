@@ -101,16 +101,7 @@ public class TextInput {
 			System.err.println("Couldn't understand: " + response + " try one of [yes, no]");
 		}
 	}
-		
-	public boolean enquiry() {
-		List<String> SearchPrompt= this.getUserWords(BufferedReader);
-		if (SearchPrompt.contains("search")){
-			System.out.println("Test");
-			return true; 
-			} else { 
-				return false;
-			}
-	}
+	
 
 	/**
 	 * Use command-line arguments to set up a TextInput.

@@ -12,8 +12,17 @@ import java.util.Random;
  *
  */
 public class InteractiveFiction {
+	/**
+	 *  Create an hour variable to adjust hours
+	 */
 			public static int hour=0;
+	/**
+	*  Create variable to keep track of how many hours have lapses since moving 
+	*/
 			public static int hourPast;
+	/**
+	*  Create variable for number of hours that have passed in game
+	*/
 			public static int actualT;
 			public static Random random= new Random();
 
@@ -40,9 +49,7 @@ public class InteractiveFiction {
 			// The place where we are and the exact location we are in is printed.
 			System.out.println("Place: "+place);
 			System.out.println("Here: "+here);
-			
-			
-			
+				
 			
 			// Tell us the description about the location we're in
 			System.out.println(here.getDescription());
@@ -61,11 +68,13 @@ public class InteractiveFiction {
 			GameTime Gt= new GameTime(hour, hourPast);
 			// Actually return the hour
 			actualT+= Gt.getHour();
+			// use dayT to make 24 hour clock
 			int dayT=actualT%24;
-			// Tell us the time if 12 or more hours have passed
+			// Tell user time if 12 or more hours have passed
 			if (hourPast>=12) {				
 				System.out.println(hourPast+" hrs. more have passed."); 
 			}
+			// Tell user time on clock
 			System.out.println("It is "+ dayT +":00 in the day.");
 			
 
@@ -74,16 +83,17 @@ public class InteractiveFiction {
 				System.out.println("You have been in the game for "+ actualT+" hours.");
 				break;
 			}
-
+		
 			// Show a user the ways out of this place.
 			List<Exit> exits = here.getVisibleExits();
 
 			for (int i=0; i<exits.size(); i++) {
+				// Tell user they cannot go to locked exit given no key and door is locked
 				Exit e = exits.get(i);
 				if ((e.key==false)&& (e.isLocked()==true)) {
 					System.out.println(" "+ i+". You cannot go here because the door is locked.");
 				} else {
-				System.out.println(" "+i+". " + e.getDescription());
+					System.out.println(" "+i+". " + e.getDescription());
 			}
 			}
 
@@ -97,20 +107,25 @@ public class InteractiveFiction {
 			// Get the word they typed as lowercase, and no spaces.
 			// Do not upper-case action -- I have lowercased it.
 			String action = words.get(0).toLowerCase().trim();
-
+				// if user looks up search change boolean search to true
+			// so that the secret exit is searched for
 				if (action.equals("search")) {
 					Exit.search= true;
 					continue;
 				} else {
+					// user typing key makes the boolean key true
+				// so the door should open
 				} if (action.equals("key")) {
 					Exit.key=true;
 					continue;
 				} else {
+					// if the user types help give option
 				} if (action.equals("help")) {
 					System.out.println("Try choosing a integer option (0-n)."
 							+ "Or try typing 'quit', 'q', or 'escape' to quit game.");
 					continue;
 				}	
+				// user can type quit, q, or to get exit menu
 				if (action.equals("quit") | action.equals("q")| action.equals("escape")) {
 					if (input.confirm("Are you sure you want to quit?")) {
 						return place;
@@ -130,6 +145,7 @@ public class InteractiveFiction {
 				continue;
 			}
 
+			// If user gives game option too large or out of bounds tell user
 			if (exitNum < 0 || exitNum >= exits.size()) {
 				System.out.println("I don't know what to do with that number!");
 				continue;
@@ -138,8 +154,9 @@ public class InteractiveFiction {
 			// Move to the room they indicated.
 			Exit destination = exits.get(exitNum);
 			Exit destPrior= exits.get(0);
+			// if destination is locked and has not been given a key
+			// we single out this case for having the user return to current room
 			if ((destination.key==false)&& (destination.isLocked()==true)) {
-				//place= destination.(game.getStart());
 			}
 			place = destination.getTarget();
 		}

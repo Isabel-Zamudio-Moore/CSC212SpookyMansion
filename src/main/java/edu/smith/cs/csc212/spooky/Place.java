@@ -46,7 +46,7 @@ public class Place {
 		this.description = description;
 		this.exits = new ArrayList<>();
 		this.terminal = terminal;
-		stuff(exits);
+		//stuff(exits);
 		List<Exit> vistedlist = new ArrayList<>(); 
 	}
 	
@@ -86,7 +86,11 @@ public class Place {
 	 * @return what we show to a player about this place.
 	 */
 	public String getDescription() {
+		if (descItem==null){
+			description=description;
+		} else {
 		description= description + descItem;
+		} //else {}
 		return this.description;
 	}
 
@@ -141,6 +145,7 @@ public class Place {
 	
 	/**
 	 * Give a string for debugging what place is what.
+	 * @ return the place with its exits and number of exits
 	 */
 	public String toString() {
 		return "Place("+this.id+" with "+this.exits.size()+" exits.)";
@@ -148,6 +153,7 @@ public class Place {
 	
 	/**
 	 * Whether this is the same place as another.
+	 * @return if one place is an instance of another place
 	 */
 	public boolean equals(Object other) {
 		if (other instanceof Place) {
@@ -175,7 +181,6 @@ public class Place {
 	
 	/**
 	 *  Create a list of items that we can place in rooms
-	 *  #
 	 */
 	public void items() {
 		List <String>items= new ArrayList<>();
@@ -187,33 +192,6 @@ public class Place {
 			items.add("Picture.");
 			items.add("Concert Tshirt.");
 			items.add("Timberwolf Picture.");
-					
-
 			}
 	
-	/**
-	 * Stuff takes the l
-	 */
-
-	public void stuff(List items) {
-		for (String n: items) {
-			
-			
-		}
-	}
-	
-	
-	
-	
-	/*
-	 * public boolean isLocked() { if ((this.description!=
-	 * "YOU HAVE FOUND THE SPECIAL DOOR.")) { return false; } else { return true; }}
-	 * 
-	 * private static boolean locked=false; public static boolean key=false;
-	 */
-	
-	//public static Items() {
-		//return System.out.println("True");
-		
-	//}
 }

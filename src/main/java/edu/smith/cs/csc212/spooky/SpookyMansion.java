@@ -144,8 +144,6 @@ public class SpookyMansion implements GameWorld {
 		labyrinth3.addExit(new Exit("labyrinth0", "Go West."));
 		
 
-
-
 		// Make sure your graph makes sense!
 		checkAllExitsGoSomewhere();
 	}
@@ -190,6 +188,7 @@ public class SpookyMansion implements GameWorld {
 
 	/**
 	 * Get a Place object by name.
+	 * @return the place
 	 */
 	public Place getPlace(String id) {
 		return this.places.get(id);
